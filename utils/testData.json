@@ -1,0 +1,6 @@
+{
+  "paths": {
+    "onboarding": "/onboarding-process",
+    "dashboard": "/dashboard"
+  }
+}
