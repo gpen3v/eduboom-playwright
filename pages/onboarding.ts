@@ -5,6 +5,7 @@ export class OnboardingPage {
   readonly rolePicker: Locator;
   readonly roleCard: Locator;
   readonly studentRoleCard: Locator;
+  readonly studentRoleCheckedIcon: Locator;
   readonly rolePickerContinueButton: Locator;
   readonly studentGradePicker: Locator;
   readonly gradeCard: Locator;
@@ -15,11 +16,28 @@ export class OnboardingPage {
     this.rolePicker = page.locator('.role-picker-cards-container');
     this.roleCard = page.locator('.user-role-card');
     this.studentRoleCard = page.getByTestId('student');
+    this.studentRoleCheckedIcon = this.studentRoleCard.locator('.checked-icon');
     this.rolePickerContinueButton = page.getByTestId('role-picker-continue-btn');
     this.studentGradePicker = page.getByTestId('grade-picker-student');
     this.gradeCard = page.locator('.grade-card');
     this.gradePickerContinueButton = page.getByTestId('grade-picker-continue-btn');
-    
+  }
+
+  async selectGrade(grade: number) {
+    const card = this.gradeCard.filter({ hasText: grade.toString() });
+    await card.click();
+    return card; // return the selected card for assertions
+  }
+
+  async gradeResponse() {
+    const responsePromise = this.page.waitForResponse(process.env.USER_ENDPOINT!);
+    //this.gradePickerContinueButton.click();
+    const response = await responsePromise;
+    expect.soft(response.status()).toBe(200);
+    const data = await response.json();
+    const grade = data.grades[0].number;
+    console.log("Klas:", grade);
+    return grade;
   }
 }
 
