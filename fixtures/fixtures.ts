@@ -18,15 +18,15 @@ export const test = base.extend({
     /**
      * Mock /api/v1/user to ensure tests start with a fresh guest user.
      */
-    // await page.route('**/api/v1/user', route => 
-    //   route.fulfill({
-    //     status: 200,
-    //     json: {
-    //       name: "Guest",
-    //       email: `test-${Date.now()}@example.com`,
-    //     }
-    //   })
-    // );
+    await page.route(`${process.env.USER_ENDPOINT}`, route => 
+      route.fulfill({
+        status: 200,
+        json: {
+          name: "Guest",
+          email: `test-${Date.now()}@example.com`,
+        }
+      })
+    );
     
     await use(page);
   }

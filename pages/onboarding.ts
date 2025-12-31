@@ -29,15 +29,28 @@ export class OnboardingPage {
     return card; // return the selected card for assertions
   }
 
-  async gradeResponse() {
+  async submitResponseOK() {
     const responsePromise = this.page.waitForResponse(process.env.USER_ENDPOINT!);
-    //this.gradePickerContinueButton.click();
+    await this.gradePickerContinueButton.click();
     const response = await responsePromise;
-    expect.soft(response.status()).toBe(200);
+    expect(response.status()).toBe(200);
+  }
+
+  async submitAndGetGrade() {
+    const responsePromise = this.page.waitForResponse(process.env.USER_ENDPOINT!);
+    await this.gradePickerContinueButton.click();
+    const response = await responsePromise;
+    expect(response.status()).toBe(200);
     const data = await response.json();
     const grade = data.grades[0].number;
-    console.log("Klas:", grade);
     return grade;
+  }
+
+  async submitResponse500() {
+    const responsePromise = this.page.waitForResponse(process.env.USER_ENDPOINT!);
+    await this.gradePickerContinueButton.click();
+    const response = await responsePromise;
+    expect(response.status()).toBe(500);
   }
 }
 

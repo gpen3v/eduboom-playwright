@@ -11,16 +11,6 @@ export class DashboardPage {
     this.subjectCardChip = page.locator('.subject-card-chip');
   }
 
-  async getUserGrade() {
-    const responsePromise = this.page.waitForResponse(`${process.env.USER_ENDPOINT}`);
-    const response = await responsePromise;
-    expect.soft(response.status()).toBe(200);
-    const data = await response.json();
-    const grade = data.grades[0].number;
-    console.log("Klas:", grade);
-    return grade;
-  }
-
   async validateSubjectsGrade(grade: number) {
     await expect(this.subjectCardChip.first()).toBeVisible();
     const chipTexts = await this.subjectCardChip.allInnerTexts();
