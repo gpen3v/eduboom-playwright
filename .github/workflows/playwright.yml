@@ -2,7 +2,6 @@ name: Playwright Tests
 on:
   workflow_dispatch:
   schedule:
-    # 17:00 EET, UTC+2
     - cron: '0 15 * * *'  # Runs at 17:00 EET
   push:
     branches: [ main ]
@@ -24,11 +23,35 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
+    - name: Run Playwright tests (generate HTML report)
+      # Ensure the HTML report is generated even when tests pass
+      run: npx playwright test --reporter=html
     - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      # upload test artifacts regardless of job result (unless cancelled)
+      if: always()
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    # Upload the generated Playwright report for GitHub Pages deployment
+    - name: Upload Playwright report for Pages
+      # Always run this step so Pages artifact is available even when tests succeed
+      if: always()
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: playwright-report
+
+  deploy-report:
+    needs: test
+    # Ensure deploy runs even if the test job completed successfully or failed
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
