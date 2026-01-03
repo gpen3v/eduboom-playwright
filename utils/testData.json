@@ -1,6 +1,21 @@
 {
   "paths": {
     "onboarding": "/onboarding-process",
-    "dashboard": "/dashboard"
+    "dashboard": "/dashboard",
+    "lessons": "/lessons"
+  },
+  "gradeIDs": {
+    "1": "01995806-6943-7134-9d20-6453a4339dd2",
+    "2": "01995806-6951-7208-8275-c3745fc6452a",
+    "3": "01995806-695d-733e-aa2b-3dacc0eaeb74",
+    "4": "01995806-6969-728a-82f9-5ec5fefb79cd",
+    "5": "01995806-6978-7009-bd44-42ed36bbe303",
+    "6": "01995806-697f-71ec-b598-8fa341d70834",
+    "7": "01995806-698a-72eb-aef1-a8569c5bb0df",
+    "8": "01995806-6996-73e5-865b-af06833888b4"
+  },
+  "texts": {
+    "soon": "Wkrótce dostępne!",
+    "continue": "Kontynuuj"
   }
 }

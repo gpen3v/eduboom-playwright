@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixtures.ts';
 import { OnboardingPage } from '../pages/onboarding.ts';
 import { DashboardPage } from '../pages/dashboard.ts';
-import { paths } from '../utils/testData.json'
+import { paths } from '../utils/testData.json';
 
 test.describe('Onboarding Flow', () => {
   let onboarding: OnboardingPage;
@@ -37,8 +37,6 @@ test.describe('Onboarding Flow', () => {
   });
 
   test('Positive Scenario - Successful Onboarding', async ({ page }) => {
-    await page.pause();
-
     // Continue to Dashboard
     const userGrade = await onboarding.submitAndGetGrade(); // Click Continue and get the grade of the user
     expect(userGrade).toBe(testedGrade);
