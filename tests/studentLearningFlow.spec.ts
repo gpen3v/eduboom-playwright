@@ -13,7 +13,7 @@ test.describe('Student Learning Journey', () => {
   let lesson: VideoLessonPage;
   let subjectName: string | undefined;
   
-  test('student can find and watch a video lesson', async ({ page }) => {
+  test('Student can find and watch a video lesson', async ({ page }) => {
     lessonsPage = new LessonsPage(page);
     subjectPage = new SubjectPage(page);
     missionPage = new MissionPage(page);

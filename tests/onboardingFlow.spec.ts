@@ -31,8 +31,9 @@ test.describe('Onboarding Flow', () => {
 
     // Select a grade
     await expect(onboarding.studentGradePicker).toBeVisible();
-    await expect(onboarding.gradePickerContinueButton).toBeEnabled();
     await expect(onboarding.gradeActive).toBeInViewport();
+    await expect(onboarding.gradePickerContinueButton).toBeEnabled();
+    await expect(onboarding.gradesSwiperWrapper).toHaveAttribute('style', /transition-duration:\s*0ms/);
     await onboarding.selectGrade(testedGrade);
     await expect(onboarding.gradeActive).toHaveText(testedGrade.toString());
   });

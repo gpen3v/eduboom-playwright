@@ -4,6 +4,7 @@ export class OnboardingPage {
   readonly page: Page;
   readonly rolePicker: Locator;
   readonly gradesSwiper: Locator;
+  readonly gradesSwiperWrapper: Locator;
   readonly gradeSliderPrevButton: Locator;
   readonly roleCard: Locator;
   readonly studentRoleCard: Locator;
@@ -18,6 +19,7 @@ export class OnboardingPage {
     this.page = page;
     this.rolePicker = page.locator('.role-picker-cards-container');
     this.gradesSwiper = page.locator('.mySwiper');
+    this.gradesSwiperWrapper = page.locator('.swiper-wrapper');
     this.gradeSliderPrevButton = this.gradesSwiper.locator('.slider-btn-prev');
     this.roleCard = page.locator('.user-role-card');
     this.studentRoleCard = page.getByTestId('student');
@@ -85,7 +87,8 @@ export class OnboardingPage {
     // Validate the subjects for the grade and collect names
     const subjectNames: string[] = [];
     for (const subjectData of data.data) {
-      expect.soft(subjectData.grade.number, 
+      expect.soft(
+        subjectData.grade.number, 
         `Tested grade is ${grade}, the subject "${subjectData.subject.name}" is for grade ${subjectData.grade.number}`
       ).toBe(grade); // Validate the subject is for the selected grade
       subjectNames.push(subjectData.subject.name); // Add the subject name to the subjectNames array

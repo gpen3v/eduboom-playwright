@@ -76,10 +76,16 @@ export class LessonsPage {
     // Validate the subjects for the grade and collect names
     const subjectNames: string[] = [];
     for (const [index, subjectData] of data.data.entries()) {
+      
       expect.soft(subjectData.grade.number,
         `Tested grade is ${grade}, the subject "${subjectData.subject.name}" is for grade ${subjectData.grade.number}`
       ).toBe(grade);
-      await expect.soft(this.subjectCardTitle.nth(index)).toHaveText(subjectData.subject.name);
+
+      await expect.soft(
+        this.subjectCardTitle.nth(index), 
+        `Subject ${index} is ${subjectData.subject.name}`
+      ).toHaveText(subjectData.subject.name);
+
       subjectNames.push(subjectData.subject.name);
     }
     return subjectNames;
