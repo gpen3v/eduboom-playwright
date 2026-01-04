@@ -22,6 +22,10 @@ export class LessonsPage {
     this.subjectCardTitle = this.subjectsSection.locator('.v-card-title');
   }
 
+  /**
+   * Ensures that the next grade chip is visible in the viewport by sliding the grade slider if necessary.
+   * @param grade - The currently selected grade
+   */
   async ensureGradeVisible(grade: number) {
     const nextGrade = grade + 1;
     if (nextGrade > 8) return; // no more grades, exit early
@@ -37,6 +41,12 @@ export class LessonsPage {
     }
   }
 
+  /**
+   * Selects a grade, ensures the grade chip is visible, waits for the API response,
+   * validates the subjects belong to the selected grade, and returns the subject names.
+   * @param grade - The grade number to select and validate
+   * @returns An array of subject names for the selected grade
+   */
   async selectGradeAndValidateSubjects(grade: number): Promise<string[]> {
     const gradeChipNumber = this.page.getByTestId(`${grade}-primary-school`).locator('.v-card-item').first();
     const gradeNumberString = grade.toString() as keyof typeof gradeIDs;

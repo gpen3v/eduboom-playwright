@@ -14,6 +14,11 @@ export class DashboardPage {
     this.subjectCardChip = page.locator('.subject-card-chip');
   }
 
+  /**
+   * Validates that the dashboard subject cards display the expected subject names.
+   *
+   * @param subjects - An array of subject names to validate on the dashboard
+   */
   async validateDashboardSubjects(subjects: string[]) {
     if (!subjects || subjects.length === 0) return;
 

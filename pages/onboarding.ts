@@ -37,6 +37,10 @@ export class OnboardingPage {
     return Math.floor(Math.random() * 8) + 1;
   }
 
+  /**
+   * Selects a grade by clicking on the corresponding grade card.
+   * @param grade - The grade to select
+   */
   async selectGrade(grade: number) {
     const card = this.gradeCard.filter({ hasText: grade.toString() });
     const maxAttempts = 5;
@@ -52,6 +56,9 @@ export class OnboardingPage {
     }
   }
 
+  /**
+   * Submits the grade selection and validates that the API responds with a 500 status.
+   */
   async submitResponse500() {
     const responsePromise = this.page.waitForResponse(process.env.USER_ENDPOINT!);
     await this.gradePickerContinueButton.click();
@@ -59,6 +66,10 @@ export class OnboardingPage {
     expect(response.status()).toBe(500);
   }
 
+  /**
+   * Submits the selected grade and returns the subject names for that grade from the API.
+   * @param grade - The selected grade used to validate and retrieve subjects
+   */
   async submitAndGetSubjects(grade: number) {
     // Prepare to wait for response from the API endpoint with subjects for the selected grade
     const responsePromise = this.page.waitForResponse(
