@@ -6,14 +6,14 @@ import { MissionPage } from '../pages/mission.ts';
 import { VideoLessonPage } from '../pages/videoLesson.ts';
 import { paths } from '../utils/testData.json';
 
-test.describe('Student Learning Journey', () => {
+test.describe('Guest Learning Journey', () => {
   let lessonsPage: LessonsPage;
   let subjectPage: SubjectPage;
   let missionPage: MissionPage;
   let lesson: VideoLessonPage;
   let subjectName: string | undefined;
   
-  test('Student can find and watch a video lesson', async ({ page }) => {
+  test('Guest user can find and watch a video lesson', async ({ page }) => {
     lessonsPage = new LessonsPage(page);
     subjectPage = new SubjectPage(page);
     missionPage = new MissionPage(page);
