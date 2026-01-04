@@ -2,21 +2,24 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixtures.ts';
 import { OnboardingPage } from '../pages/onboarding.ts';
 import { DashboardPage } from '../pages/dashboard.ts';
+import { GeneralPage } from '../pages/general.ts';
 import { paths } from '../utils/testData.json';
 
 test.describe('Onboarding Flow', () => {
   let onboarding: OnboardingPage;
   let dashboard: DashboardPage;
+  let general: GeneralPage;
   let testedGrade: number;
 
   test.beforeEach(async ({ page }) => {
     onboarding = new OnboardingPage(page);
     dashboard = new DashboardPage(page);
-    testedGrade = 8;
+    general = new GeneralPage(page);
+    testedGrade = onboarding.getRandomGrade();
 
     // Go to Onboarding page
     await page.goto(paths.onboarding);
-    await expect(page.locator('.cookie-wrap')).not.toBeVisible();
+    await expect(general.cookieBar).not.toBeVisible();
     
     // Select the Student role
     await expect(onboarding.rolePicker).toBeVisible();
@@ -29,22 +32,21 @@ test.describe('Onboarding Flow', () => {
     // Select a grade
     await expect(onboarding.studentGradePicker).toBeVisible();
     await expect(onboarding.gradePickerContinueButton).toBeEnabled();
-    const selectedGrade = await onboarding.selectGrade(testedGrade);
-    await expect(selectedGrade).toHaveClass(/grade-card--active/);
-
-    // Remove fixture mock to have the real response and to get the grade later
-    await page.unroute(`${process.env.USER_ENDPOINT}`);
+    await expect(onboarding.gradeActive).toBeInViewport();
+    await onboarding.selectGrade(testedGrade);
+    await expect(onboarding.gradeActive).toHaveText(testedGrade.toString());
   });
 
   test('Positive Scenario - Successful Onboarding', async ({ page }) => {
     // Continue to Dashboard
-    const userGrade = await onboarding.submitAndGetGrade(); // Click Continue and get the grade of the user
-    expect(userGrade).toBe(testedGrade);
+    const subjects = await onboarding.submitAndGetSubjects(testedGrade);
 
     // Vlidate Student's dashboard content
     await expect(page).toHaveURL(paths.dashboard);
     await expect(dashboard.dashboardWrapper).toBeVisible();
-    await dashboard.validateSubjectsGrade(testedGrade);
+
+    // Validate every subject is for the tested grade
+    await dashboard.validateDashboardSubjects(subjects);
   });
 
   test('Negative Scenario - Status 500 Internal Server Error', async ({ page }) => {
