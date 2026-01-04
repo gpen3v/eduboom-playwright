@@ -66,7 +66,7 @@ test.describe('Guest Learning Journey', () => {
     expect(srcSource).toBeTruthy();
     //Validate Continue and Back buttons are disabled at the start of the lesson
     await expect(lesson.continueButton).toBeDisabled();
-    await expect(lesson.backButton).toHaveClass(/back-disabled/);
+    await expect(lesson.backButtonDisabled).toBeVisible();
     //Video controls
     await lesson.videoWrapper.click();
     await expect(lesson.videoOverlay).toBeVisible();

@@ -16,6 +16,7 @@ export class VideoLessonPage {
   readonly speedButton: Locator;
   readonly videoOverlay: Locator;
   readonly backButton: Locator;
+  readonly backButtonDisabled: Locator;
   readonly continueButton: Locator;
 
   constructor(page: Page) {
@@ -33,6 +34,7 @@ export class VideoLessonPage {
     this.speedButton = page.locator('.speed-toggle-btn');
     this.closeButton = page.locator('.close-button');
     this.backButton = page.locator('.back-button');
+    this.backButtonDisabled = page.locator('.back-disabled');
     this.continueButton = page.getByRole('button', { name: texts.continue });
   }
 }
