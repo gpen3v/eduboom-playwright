@@ -83,7 +83,7 @@ export class LessonsPage {
 
       await expect.soft(
         this.subjectCardTitle.nth(index), 
-        `Subject ${index} is ${subjectData.subject.name}`
+        `Subject ${index + 1} is ${subjectData.subject.name}`
       ).toHaveText(subjectData.subject.name);
 
       subjectNames.push(subjectData.subject.name);
