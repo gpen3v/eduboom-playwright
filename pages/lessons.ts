@@ -53,8 +53,13 @@ export class LessonsPage {
     const gradeID = gradeIDs[gradeNumberString];
 
     // Prepare to wait for response from the API endpoint with subjects for the selected grade
+    const params = new URLSearchParams({
+      limit: '-1',
+      include: 'subject',
+      'filter[grade_id]': gradeID
+    });
     const responsePromise = this.page.waitForResponse(
-      `${process.env.TEXTBOOKS_ENDPOINT}?limit=-1&include=subject&filter[grade_id]=${gradeID}`
+      `${process.env.TEXTBOOKS_ENDPOINT}?${params.toString()}`
     );
 
     // Select grade
